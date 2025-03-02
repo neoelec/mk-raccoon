@@ -34,7 +34,7 @@ on_booting:
   SYStem.RESetTarget
 
   IF (FILE.EXIST(&G_RCN_PWD/custom.cmm))
-    Break.Set setup /CMD "Break.Delete setup" /CMD "DO &G_RCN_PWD/custom.cmm on_main"
+    Break.Set setup /CMD "Break.Delete setup" /CMD "DO &G_RCN_PWD/custom.cmm on_booting"
   ELSE
     Break.Set setup /CMD "Break.Delete setup"
 
