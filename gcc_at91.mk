@@ -4,15 +4,15 @@
 GCC_AT91_MK_FILE	:= $(realpath $(lastword $(MAKEFILE_LIST)))
 GCC_AT91_MK_DIR		:= $(shell dirname $(GCC_AT91_MK_FILE))
 
-# Compile for all memories available on the board (this sets $(MEMORIES))
-include $(AT91LIB)/boards/$(BOARD)/board.mak
-
 # Chip & board used for compilation
 # (can be overriden by adding CHIP=chip and BOARD=board to the command-line)
 CHIP			?= at91sam7s256
 BOARD			?= at91sam7s-ek
 PLATFORM		?= at91sam7s-ek
 PROGMEM			?= flash
+
+# Compile for all memories available on the board (this sets $(MEMORIES))
+include $(AT91LIB)/boards/$(PLATFORM)/board.mak
 
 # Trace level used for compilation
 # (can be overriden by adding TRACE_LEVEL=#number to the command-line)
@@ -32,6 +32,17 @@ OBJDIR			:= obj/$(PROGMEM)
 
 # Append OBJ and BIN directories to output filename
 OUTPUT			:= $(addprefix $(BINDIR)/, $(TARGET)-$(BOARD)-$(CHIP))
+
+VPATH			+= $(AT91LIB)/boards/$(BOARD)
+VPATH			+= $(AT91LIB)/boards/$(PLATFORM)
+VPATH			+= $(AT91LIB)/utility
+
+EXTRAINCDIRS		+= $(AT91LIB)/boards/$(BOARD)
+EXTRAINCDIRS		+= $(AT91LIB)/boards/$(PLATFORM)
+EXTRAINCDIRS		+= $(AT91LIB)
+
+CSRCS			+= board_lowlevel.c board_memories.c
+ASRCS			+= board_cstartup.S
 
 #---------------- Compiler Options ----------------
 #  -g*:          generate debugging information
