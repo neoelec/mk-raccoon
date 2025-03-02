@@ -23,7 +23,7 @@ on_booting:
   SYStem.RESetTarget
 
   IF (FILE.EXIST(&G_RCN_PWD/custom.cmm))
-    Break.Set main /CMD "Break.Delete main" /CMD "DO &G_RCN_PWD/custom.cmm on_main"
+    Break.Set main /CMD "Break.Delete main" /CMD "DO &G_RCN_PWD/custom.cmm on_booting"
   ELSE
     Break.Set main /CMD "Break.Delete main"
 
