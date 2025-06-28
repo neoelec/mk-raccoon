@@ -36,20 +36,20 @@ BIN_FILE		:= $(OUTPUT).bin
 HEX_FILE		:= $(BIN_FILE:.bin=.hex)
 MAP_FILE		:= $(BIN_FILE:.bin=.map)
 
-all: info $(ELF_FILE)
+all: info $(BIN_FILE)
 
 info:
 	@if [ -z "$(FQBN)" ]; then exit -1; fi
 	@echo "[INFO] $(FQBN) , $(UPLOAD_PORT)"
 
-upload: $(ELF_FILE)
+upload: $(BIN_FILE)
 	@$(ARDUINO_CLI) upload $(UPLOAD_FLAGS)
 
 clean:
 	@rm -rf build
 	@rm -rf $(INTERMEDIATES)
 
-$(ELF_FILE): $(SRCS)
+$(BIN_FILE): $(SRCS)
 	$(ARDUINO_CLI) compile $(COMPILE_FLAGS)
 
 .PHONY: all info upload clean
