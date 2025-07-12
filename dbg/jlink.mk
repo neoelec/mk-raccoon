@@ -10,8 +10,19 @@ JFLASHEXE		:= $(JLINKBIN)/JFlashExe
 JLINKGDBEXE		:= $(JLINKBIN)/JLinkGDBServerCLExe
 
 JLINKCHIP		?= AT91SAM7S256
-JFLASHFLAGS		:= -openprj $(JLINKBIN)/Samples/JFlash/ProjectFiles/Atmel/$(JLINKCHIP).jflash
-JLINKGDBFLAGS		:= -device $(JLINKCHIP)
+JLINKPORT		?= 2331
+
+JFLASHFLAGS		+= -auto
+JFLASHFLAGS		+= -startapp
+JFLASHFLAGS		+= -exit
+JFLASHFLAGS		+= -hide
+
+JLINKGDBFLAGS		+= -select USB=0
+JLINKGDBFLAGS		+= -device $(JLINKCHIP)
+JLINKGDBFLAGS		+= -noir
+JLINKGDBFLAGS		+= -noLocalhostOnly
+JLINKGDBFLAGS		+= -nologtofile
+JLINKGDBFLAGS		+= -port $(JLINKPORT)
 
 GDBSERVER_SH		?= $(JLINK_MK_DIR)/gdbserver.sh
 TRACE32_SH		?= $(JLINK_MK_DIR)/t32_jlink.sh
@@ -20,36 +31,31 @@ DEBUG_SYMBOL		:= $(OUTPUT).elf
 FLASH_BIN		:= $(OUTPUT).bin
 
 MSG_JFLASH		:= J-Flash:
-MSG_JLINK		:= J-Link:
+MSG_JLINKGDB		:= J-Link GDB:
 
 USE_JFLASH		?= y
 
 ifeq ($(USE_JFLASH),y)
 jflash: $(FLASH_BIN)
 	@echo
-	@echo $(MSG_JLINK) $<
-	@$(JFLASHEXE) $(JFLASHFLAGS) -open $(OUTPUT).bin,`cat $(LD_SCRIPT) | \
-			grep -E '$(PROGMEM).+ORIGIN' | \
-			perl -pe 's/^.+ORIGIN\s*=\s*(\S+)\s*,.+$$/$$1/'` \
-		-auto -startapp -exit
+	@echo $(MSG_JFLASH) $<
+	@$(JFLASHEXE) -open $<,$(JFLASHBASE) $(JFLASHFLAGS)
 
 .PHONY: jflash
 endif
 
-jlink: $(DEBUG_SYMBOL)
+jlinkgdb: $(DEBUG_SYMBOL)
 	@echo
-	@echo $(MSG_JLINK) $<
+	@echo $(MSG_JLINKGDB) $<
 	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
 	@$(GDBSERVER_SH) $< >> .gdbinit
 	@$(TRACE32_SH) $< > target.cmm
-	@$(JLINKGDBEXE) -select USB=0  $(JLINKGDBFLAGS) \
-		-endian little -if JTAG -speed 4000 -noir -noLocalhostOnly -nologtofile \
-		-port 2331 -SWOPort 2332 -TelnetPort 2333
+	@$(JLINKGDBEXE) $(JLINKGDBFLAGS)
 
-clean: clean_jlink
+clean: clean_jlinkgdb
 
-clean_jlink:
+clean_jlinkgdb:
 	$(REMOVE) .gdbinit
 	$(REMOVE) target.cmm
 
-.PHONY: jlink clean_jlink
+.PHONY: jlinkgdb clean_jlinkgdb
