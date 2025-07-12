@@ -184,7 +184,7 @@ COBJS			+= $$(COBJS_$(1))
 $$(COBJS_$(1)): $(OBJDIR)/%.o : %.$(1) | $(OBJDIR)
 	@echo
 	@echo $(MSG_COMPILING) $$<
-	$(CC) -c -Wa,-adhlns=$$(@:.o=.lst) $(ALL_CFLAGS) $$< -o $$@
+	$(CC) -c -Wa,-adhlns=$$(@:.o=.lst) -MMD -MP -MF$$(@:.o=.d) -MT$$@ $(ALL_CFLAGS) $$< -o $$@
 endef
 
 $(foreach EXT, $(EXT_CC), $(eval $(call RULES_CC,$(EXT))))
@@ -197,7 +197,7 @@ CXXOBJS			+= $$(CXXOBJS_$(1))
 $$(CXXOBJS_$(1)): $(OBJDIR)/%.o : %.$(1) | $(OBJDIR)
 	@echo
 	@echo $(MSG_COMPILING) $$<
-	$(CXX) -c -Wa,-adhlns=$$(@:.o=.lst) $(ALL_CXXFLAGS) $$< -o $$@
+	$(CXX) -c -Wa,-adhlns=$$(@:.o=.lst) -MMD -MP -MF$$(@:.o=.d) -MT$$@ $(ALL_CXXFLAGS) $$< -o $$@
 endef
 
 $(foreach EXT, $(EXT_CXX), $(eval $(call RULES_CXX,$(EXT))))
