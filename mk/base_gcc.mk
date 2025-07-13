@@ -41,8 +41,8 @@ OUT_MK			?= $(BASE_GCC_MK_DIR)/out_elf.mk
 
 # Source extension names
 EXT_CC			+= c
-EXT_CXX			+= cc cpp
-EXT_AS			+= asm S
+EXT_CXX			+= cc cpp cxx
+EXT_AS			+= asm s S
 
 # VPATH variable
 VPATH			+=

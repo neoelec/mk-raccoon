@@ -15,7 +15,7 @@ BINDIR			?= bin
 OBJDIR			?= obj
 
 # Source extension names
-EXT_AS			+= asm S
+EXT_AS			+= asm s S
 
 # VPATH variable
 VPATH			+=

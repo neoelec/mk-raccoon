@@ -88,7 +88,7 @@ ASMCU_mos6502		:= 6500
 
 # Source extension names
 EXT_CC			+= c
-EXT_AS			+= asm S
+EXT_AS			+= asm s S
 
 # VPATH variable
 VPATH			+=
