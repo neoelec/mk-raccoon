@@ -48,7 +48,6 @@ ASRCS			+=
 #  -Wa,...:      tell GCC to pass this to the assembler.
 #    -adhlns...: create assembler listing
 CFLAGS			+= -D$(CHIP)
-CFLAGS			+= -D$(PROGMEM)
 CFLAGS			+= -DTRACE_LEVEL=$(TRACE_LEVEL)
 CFLAGS			+= -Wall
 CFLAGS			+= -mlong-calls

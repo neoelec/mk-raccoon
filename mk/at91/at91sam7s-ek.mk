@@ -17,6 +17,7 @@ CSRCS			+= board_memories.c
 
 ASRCS			+= board_cstartup.S
 
+CFLAGS			+= -Dflash
 CFLAGS			+= -mcpu=arm7tdmi
 CFLAGS			+= -mfloat-abi=soft
 
