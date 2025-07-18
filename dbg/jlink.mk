@@ -17,7 +17,6 @@ JFLASHFLAGS		+= -startapp
 JFLASHFLAGS		+= -exit
 JFLASHFLAGS		+= -hide
 
-JLINKGDBFLAGS		+= -select USB=0
 JLINKGDBFLAGS		+= -device $(JLINKCHIP)
 JLINKGDBFLAGS		+= -noir
 JLINKGDBFLAGS		+= -noLocalhostOnly
@@ -28,7 +27,6 @@ GDBSERVER_SH		?= $(JLINK_MK_DIR)/gdbserver.sh
 TRACE32_SH		?= $(JLINK_MK_DIR)/t32_jlink.sh
 
 DEBUG_SYMBOL		:= $(OUTPUT).elf
-FLASH_BIN		:= $(OUTPUT).bin
 
 MSG_JFLASH		:= J-Flash:
 MSG_JLINKGDB		:= J-Link GDB:
@@ -36,10 +34,10 @@ MSG_JLINKGDB		:= J-Link GDB:
 USE_JFLASH		?= y
 
 ifeq ($(USE_JFLASH),y)
-jflash: $(FLASH_BIN)
+jflash: $(DEBUG_SYMBOL)
 	@echo
 	@echo $(MSG_JFLASH) $<
-	@$(JFLASHEXE) -open $<,$(JFLASHBASE) $(JFLASHFLAGS)
+	$(JFLASHEXE) -open $< -openprj $(JFLASHPRJ) $(JFLASHFLAGS)
 
 .PHONY: jflash
 endif
@@ -50,7 +48,7 @@ jlinkgdb: $(DEBUG_SYMBOL)
 	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
 	@$(GDBSERVER_SH) $< >> .gdbinit
 	@$(TRACE32_SH) $< > target.cmm
-	@$(JLINKGDBEXE) $(JLINKGDBFLAGS)
+	$(JLINKGDBEXE) $(JLINKGDBFLAGS)
 
 clean: clean_jlinkgdb
 
