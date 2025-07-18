@@ -10,3 +10,8 @@ TRACE32_SH		:= $(INODBG_MK_DIR)/t32_inodbg.sh
 USE_JFLASH		:= n
 
 include $(INODBG_MK_DIR)/jlink.mk
+
+# forcely disable openocdflash
+USE_OPENOCDFLASH	:= n
+
+include $(INODBG_MK_DIR)/openocd.mk
