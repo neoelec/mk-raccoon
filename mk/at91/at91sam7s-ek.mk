@@ -17,11 +17,8 @@ CSRCS			+= board_memories.c
 
 ASRCS			+= board_cstartup.S
 
-BASE_flash		:= 0x100000
-BASE_sram		:= 0x200000
-
 CFLAGS			+= -mcpu=arm7tdmi
 CFLAGS			+= -mfloat-abi=soft
 
 # Linker Script
-LD_SCRIPT		?= $(AT91LIB)/boards/$(PLATFORM)/$(CHIP)/$(PROGMEM).lds
+LD_SCRIPT		?= $(AT91LIB)/boards/$(PLATFORM)/$(CHIP)/flash.lds

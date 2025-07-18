@@ -8,7 +8,6 @@ GCC_AT91_MK_DIR		:= $(shell dirname $(GCC_AT91_MK_FILE))
 # (can be overriden by adding CHIP=chip and BOARD=board to the command-line)
 BOARD			?= at91sam7s-ek
 PLATFORM		?= at91sam7s-ek
-PROGMEM			?= flash
 
 include $(GCC_AT91_MK_DIR)/mk/at91/$(PLATFORM).mk
 
@@ -28,8 +27,8 @@ TRACE_LEVEL		?= 0
 CROSS_COMPILE		:= arm-none-eabi-
 
 # Output directories
-BINDIR			:= bin/$(PROGMEM)
-OBJDIR			:= obj/$(PROGMEM)
+BINDIR			:= bin
+OBJDIR			:= obj
 
 # Append OBJ and BIN directories to output filename
 OUTPUT			:= $(addprefix $(BINDIR)/, $(TARGET)-$(BOARD)-$(CHIP))
@@ -79,22 +78,7 @@ LDFLAGS			+= -Wl,--start-group -lc -lm -Wl,--end-group
 
 include $(GCC_AT91_MK_DIR)/mk/base_gcc.mk
 
-MSG_FLASH		:= Creating load file for Flash:
-
-bin: $(OUTPUT).bin
-
-# Create final output files from ELF output file.
-%.bin: %.elf
-	@echo
-	@echo $(MSG_FLASH) $@
-	$(OBJCOPY) -O binary $< $@
-
-.PHONY: elf
-
 JLINKCHIP		:= $(shell echo $(CHIP) | tr a-z A-Z)
-JFLASHBASE		:= $(BASE_$(PROGMEM))
-
-JFLASHFLAGS		+= -openprj $(JLINKBIN)/Samples/JFlash/ProjectFiles/Atmel/$(JLINKCHIP).jflash
-JLINKGDBFLAGS		+= -endian little -if JTAG -speed 4000
+JFLASHPRJ		:= $(GCC_AT91_MK_DIR)/mk/at91/jflash/$(CHIP).jflash
 
 include $(GCC_AT91_MK_DIR)/dbg/jlink.mk
