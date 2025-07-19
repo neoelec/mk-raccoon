@@ -46,7 +46,6 @@ ASRCS			+=
 #    -adhlns...: create assembler listing
 CFLAGS			+= -D$(CHIP)
 CFLAGS			+= -DTRACE_LEVEL=$(TRACE_LEVEL)
-CFLAGS			+= -Wall
 CFLAGS			+= -mlong-calls
 CFLAGS			+= -ffunction-sections
 CFLAGS			+= --param=min-pagesize=0
