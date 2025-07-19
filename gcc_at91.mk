@@ -9,10 +9,7 @@ GCC_AT91_MK_DIR		:= $(shell dirname $(GCC_AT91_MK_FILE))
 BOARD			?= at91sam7s-ek
 PLATFORM		?= at91sam7s-ek
 
-include $(GCC_AT91_MK_DIR)/mk/at91/$(PLATFORM).mk
-
-# Compile for all memories available on the board (this sets $(MEMORIES))
-include $(AT91LIB)/boards/$(PLATFORM)/board.mak
+include $(GCC_AT91_MK_DIR)/mk/at91/platform/$(PLATFORM).mk
 
 # Trace level used for compilation
 # (can be overriden by adding TRACE_LEVEL=#number to the command-line)
