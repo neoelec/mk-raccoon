@@ -25,8 +25,8 @@ CROSS_COMPILE		:= avr-
 #     gnu89 = c89 plus GCC extensions
 #     c99   = ISO C99 standard (not yet fully implemented)
 #     gnu99 = c99 plus GCC extensions
-CSTANDARD		?= -std=gnu11
-CXXSTANDARD		?= -std=gnu++11
+CSTANDARD		?= -std=gnu17
+CXXSTANDARD		?= -std=gnu++17
 
 # Place -D or -U options here
 CDEFS			+= -mmcu=$(MCU) -DF_CPU=$(F_CPU)UL
@@ -38,9 +38,10 @@ CDEFS			+= -mmcu=$(MCU) -DF_CPU=$(F_CPU)UL
 #  -Wall...:     warning level
 #  -Wa,...:      tell GCC to pass this to the assembler.
 #    -adhlns...: create assembler listing
-CFLAGS			+= -funsigned-char -funsigned-bitfields
-CFLAGS			+= -fpack-struct -fshort-enums
-CFLAGS			+= -Wall -Wstrict-prototypes -Wno-unused
+CFLAGS			+= -funsigned-char
+CFLAGS			+= -funsigned-bitfields
+CFLAGS			+= -fpack-struct
+CFLAGS			+= -fshort-enums
 
 #---------------- Assembler Options ----------------
 #  -Wa,...:   tell GCC to pass this to the assembler.
@@ -54,37 +55,6 @@ CFLAGS			+= -Wall -Wstrict-prototypes -Wno-unused
 ASFLAGS			+= -x assembler-with-cpp
 ASFLAGS			+= -Wa,-gstabs,--listing-cont-lines=100
 
-#---------------- Library Options ----------------
-# None pritf options
-__PRINTF_LIB_NONE	:=
-
-# Minimalistic printf version
-__PRINTF_LIB_MIN	:= -Wl,-u,vfprintf -lprintf_min
-
-# Floating point printf version (requires MATH_LIB = -lm below)
-__PRINTF_LIB_FLOAT	:= -Wl,-u,vfprintf -lprintf_flt
-
-# If this is left blank, then it will use the Standard printf version.
-PRINTF_LIB		?= NONE
-
-# None scanf options
-__SCANF_LIB_NONE	:=
-
-# Minimalistic scanf version
-__SCANF_LIB_MIN		:= -Wl,-u,vfscanf -lscanf_min
-
-# Floating point + %[ scanf version (requires MATH_LIB = -lm below)
-__SCANF_LIB_FLOAT	:= -Wl,-u,vfscanf -lscanf_flt
-
-# If this is left blank, then it will use the Standard scanf version.
-SCANF_LIB		?= NONE
-
-# Math library options
-__MATH_LIB_FALSE	:=
-__MATH_LIB_TRUE		:= -lm
-
-MATH_LIB		?= FALSE
-
 #---------------- External Memory Options ----------------
 
 # 64 KB of external RAM, starting after internal RAM (ATmega128!),
@@ -94,12 +64,10 @@ MATH_LIB		?= FALSE
 # 64 KB of external RAM, starting after internal RAM (ATmega128!),
 # only used for heap (malloc()).
 #EXTMEMOPTS		:= -Wl,--defsym=__heap_start=0x801100,--defsym=__heap_end=0x80ffff
-EXTMEMOPTS		+=
+EXTMEMOPTS		?=
 
 LDFLAGS			+= $(EXTMEMOPTS)
-LDFLAGS			+= $(__PRINTF_LIB_$(PRINTF_LIB))
-LDFLAGS			+= $(__SCANF_LIB_$(SCANF_LIB))
-LDFLAGS			+= $(__MATH_LIB_$(MATH_LIB))
+LDFLAGS			+= -Wl,--start-group -lc -lm -Wl,--end-group
 
 OUT_MK			:= $(GCC_AVR_MK_DIR)/mk/out_avr.mk
 
