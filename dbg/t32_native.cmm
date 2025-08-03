@@ -48,10 +48,10 @@ __load_symbol:
 
   &start=Register(RAX)
 
-  Data.LOAD.Elf &G_RCN_Baremetal_Elf_File /NoCODE
+  Data.LOAD.Elf &G_RCN_Target_Elf_File /NoCODE
   &start_phys=ADDRESS.OFFSET(sYmbol.BEGIN(_start))
   sYmbol.Delete
-  Data.LOAD.Elf &G_RCN_Baremetal_Elf_File (&start-&start_phys) /NoCODE
+  Data.LOAD.Elf &G_RCN_Target_Elf_File (&start-&start_phys) /NoCODE
 
   RETURN
 )
