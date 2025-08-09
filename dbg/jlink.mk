@@ -4,24 +4,24 @@
 JLINK_MK_FILE		:= $(realpath $(lastword $(MAKEFILE_LIST)))
 JLINK_MK_DIR		:= $(shell dirname $(JLINK_MK_FILE))
 
-JLINKBIN		:= /opt/SEGGER/JLink
+JLINK_DIR		:= /opt/SEGGER/JLink
 
-JFLASHEXE		:= $(JLINKBIN)/JFlashExe
-JLINKGDBEXE		:= $(JLINKBIN)/JLinkGDBServerCLExe
+JFLASH			:= $(JLINK_DIR)/JFlashExe
+JLINKGDB		:= $(JLINK_DIR)/JLinkGDBServerCLExe
 
-JLINKCHIP		?= AT91SAM7S256
-JLINKPORT		?= 2331
+JLINK_CHIP		?= AT91SAM7S256
+JLINK_PORT		?= 2331
 
-JFLASHFLAGS		+= -auto
-JFLASHFLAGS		+= -startapp
-JFLASHFLAGS		+= -exit
-JFLASHFLAGS		+= -hide
+JFLASH_FLAGS		+= -auto
+JFLASH_FLAGS		+= -startapp
+JFLASH_FLAGS		+= -exit
+JFLASH_FLAGS		+= -hide
 
-JLINKGDBFLAGS		+= -device $(JLINKCHIP)
-JLINKGDBFLAGS		+= -noir
-JLINKGDBFLAGS		+= -noLocalhostOnly
-JLINKGDBFLAGS		+= -nologtofile
-JLINKGDBFLAGS		+= -port $(JLINKPORT)
+JLINKGDB_FLAGS		+= -device $(JLINK_CHIP)
+JLINKGDB_FLAGS		+= -noir
+JLINKGDB_FLAGS		+= -noLocalhostOnly
+JLINKGDB_FLAGS		+= -nologtofile
+JLINKGDB_FLAGS		+= -port $(JLINK_PORT)
 
 GDBSERVER_SH		?= $(JLINK_MK_DIR)/gdbserver.sh
 TRACE32_SH		?= $(JLINK_MK_DIR)/t32_jlink.sh
@@ -37,7 +37,7 @@ ifeq ($(USE_JFLASH),y)
 jflash: $(DEBUG_SYMBOL)
 	@echo
 	@echo $(MSG_JFLASH) $<
-	$(JFLASHEXE) -open $< -openprj $(JFLASHPRJ) $(JFLASHFLAGS)
+	$(JFLASH) -open $< -openprj $(JFLASH_PRJ) $(JFLASH_FLAGS)
 
 .PHONY: jflash
 endif
@@ -48,7 +48,7 @@ jlinkgdb: $(DEBUG_SYMBOL)
 	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
 	@$(GDBSERVER_SH) $< >> .gdbinit
 	@$(TRACE32_SH) $< > target.cmm
-	$(JLINKGDBEXE) $(JLINKGDBFLAGS)
+	$(JLINKGDB) $(JLINKGDB_FLAGS)
 
 clean: clean_jlinkgdb
 
