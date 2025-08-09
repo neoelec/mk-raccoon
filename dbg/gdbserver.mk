@@ -5,7 +5,9 @@ GDBSERVER_MK_FILE	:= $(realpath $(lastword $(MAKEFILE_LIST)))
 GDBSERVER_PATH		:= $(shell dirname $(GDBSERVER_MK_FILE))
 
 GDBSERVER		:= gdbserver
-GDBSERVERFLAGS		:= localhost:2331 $(OUTPUT)
+GDBSERVER_PORT		?= 2331
+
+GDBSERVER_FLAGS		:= localhost:$(GDBSERVER_PORT) $(OUTPUT)
 
 GDBSERVER_SH		?= $(GDBSERVER_PATH)/gdbserver.sh
 TRACE32_SH		?= $(GDBSERVER_PATH)/t32_native.sh
@@ -20,7 +22,7 @@ gdbserver: $(OUTPUT) $(DEBUG_SYMBOL)
 	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
 	@$(GDBSERVER_SH) $< >> .gdbinit
 	@$(TRACE32_SH) $< > target.cmm
-	@$(GDBSERVER) $(GDBSERVERFLAGS) $(TESTFLAGS)
+	@$(GDBSERVER) $(GDBSERVER_FLAGS) $(TESTFLAGS)
 
 clean: clean_gdbserver
 
