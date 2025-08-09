@@ -19,6 +19,10 @@ else
 OUTPUT			:= $(addprefix target/debug/, $(TARGET))
 endif
 
+ELF_FILE		:= $(OUTPUT).elf
+
+DEBUG_SYMBOL		:= $(ELF_FILE)
+
 # Define programs and commands.
 REMOVE			:= rm -rf
 COPY			:= cp
@@ -41,9 +45,9 @@ output: exec elf
 run: $(OUTPUT)
 	$(CARGO) run $(BUILDFLAGS) $(TESTFLAGS)
 
-elf: $(OUTPUT).elf
+elf: $(ELF_FILE)
 
-$(OUTPUT).elf: $(OUTPUT)
+$(ELF_FILE): $(OUTPUT)
 	$(COPY) $< $@
 
 exec: $(OUTPUT)

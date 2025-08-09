@@ -13,8 +13,8 @@ AVRDUDE_PROGRAMMER		?= usbtiny
 #AVRDUDE_PORT			:= -P com1	# programmer connected to serial device
 AVRDUDE_PORT			?=
 
-AVRDUDE_WRITE_FLASH		:= -U flash:w:$(OUTPUT).hex
-AVRDUDE_WRITE_EEPROM		:= -U eeprom:w:$(OUTPUT).eep
+AVRDUDE_WRITE_FLASH		:= -U flash:w:$(HEX_FILE)
+AVRDUDE_WRITE_EEPROM		:= -U eeprom:w:$(EEP_FILE)
 
 # Uncomment the following if you want avrdude's erase cycle counter.
 # Note that this counter needs to be initialized first using -Yn,
@@ -33,7 +33,8 @@ AVRDUDE_NO_VERIFY		?=
 #AVRDUDE_VERBOSE		:= -v -v
 AVRDUDE_VERBOSE			?=
 
-AVRDUDE_FLAGS			+= -p $(MCU) -c $(AVRDUDE_PROGRAMMER)
+AVRDUDE_FLAGS			+= -p $(MCU)
+AVRDUDE_FLAGS			+= -c $(AVRDUDE_PROGRAMMER)
 AVRDUDE_FLAGS			+= $(AVRDUDE_PORT)
 AVRDUDE_FLAGS			+= $(AVRDUDE_NO_VERIFY)
 AVRDUDE_FLAGS			+= $(AVRDUDE_VERBOSE)
@@ -47,10 +48,10 @@ MSG_AVRDUDE			:= Upload with AVRDUDE :
 # Program the device.
 avrdude: build
 	@echo
-	@echo $(MSG_AVRDUDE) $(OUTPUT).hex $(OUTPUT).eep
+	@echo $(MSG_AVRDUDE) $(HEX_FILE) $(EEP_FILE)
 	@$(AVRDUDE) $(AVRDUDE_FLAGS) \
-		`if [ -f $(OUTPUT).hex ]; then echo "$(AVRDUDE_WRITE_FLASH)"; fi` \
-		`if [ -f $(OUTPUT).eep ]; then echo "$(AVRDUDE_WRITE_EEPROM)"; fi`
+		`if [ -f $(HEX_FILE) ]; then echo "$(AVRDUDE_WRITE_FLASH)"; fi` \
+		`if [ -f $(EEP_FILE) ]; then echo "$(AVRDUDE_WRITE_EEPROM)"; fi`
 
 # Listing of phony targets.
 .PHONY : avrdude

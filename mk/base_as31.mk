@@ -67,19 +67,16 @@ endef
 
 $(foreach EXT, $(EXT_AS), $(eval $(call RULES_AS,$(EXT))))
 
-%.bin: %.hex
-	@echo
-	@echo $(MSG_FLASH) "Binary"
-	srec_cat $< -Intel -o $@ -Binary
+HEX_FILE		:= $(OUTPUT).hex
 
-$(OUTPUT).hex: $(AOBJS) | $(BINDIR)
+$(HEX_FILE): $(AOBJS) | $(BINDIR)
 	@echo
 	@echo $(MSG_LINKING)
-	srec_cat `echo -n "$^ " | perl -pe 's/(\S+\.ihx) /$$1 -Intel /g'` -o $@ -Intel
+	srec_cat `echo -n "$^ " | sed -e 's/.ihx/.ihx -Intel/g'` -o $@ -Intel
 
 output: hex
 
-hex: $(OUTPUT).hex $(OUTPUT).bin
+hex: $(HEX_FILE)
 
 # Target: clean project.
 clean: clean_list

@@ -109,7 +109,10 @@ CINCS			+=
 CDEFS			+= -DF_CPU=$(F_CPU)UL
 
 # Compiler Options
-CFLAGS			+= $(CDEFS) -m$(MCU) --opt-$(OPT) --std-$(CSTANDARD)
+CFLAGS			+= $(CDEFS)
+CFLAGS			+= -m$(MCU)
+CFLAGS			+= --opt-$(OPT)
+CFLAGS			+= --std-$(CSTANDARD)
 CFLAGS			+= --debug
 CFLAGS			+= $(CINCS)
 CFLAGS			+= $(patsubst %,-I%,$(EXTRAINCDIRS))
@@ -121,7 +124,8 @@ ASFLAGS			+= -j -y
 ASFLAGS			+= $(patsubst %,-I%,$(EXTRAINCDIRS))
 
 # Linker Options
-LDFLAGS			+= --out-fmt-ihx --opt-$(OPT)
+LDFLAGS			+= --out-fmt-ihx
+LDFLAGS			+= --opt-$(OPT)
 LDFLAGS			+= --debug
 LDFLAGS			+= $(XRAM_LOC)
 LDFLAGS			+= $(CODE_LOC)
@@ -147,6 +151,7 @@ MSG_CLEANING		:= Cleaning project:
 ALL_CFLAGS		:= $(CFLAGS)
 ALL_ASFLAGS		:= $(ASFLAGS)
 
+# Default target.
 all: build
 
 build: sdccversion sizebefore $(BINDIR) $(OBJDIR) output sizeafter
@@ -200,24 +205,25 @@ endef
 
 $(foreach EXT, $(EXT_AS), $(eval $(call RULES_AS,$(EXT))))
 
-%.bin: %.ihx
-	@echo
-	@echo $(MSG_FLASH) "Binary"
-	srec_cat $< -Intel -o $@ -Binary
+IHX_FILE		:= $(OUTPUT).ihx
+HEX_FILE		:= $(IHX_FILE:.ihx=.hex)
+CDB_FILE		:= $(IHX_FILE:.ihx=.cdb)
+OMF_FILE		:= $(IHX_FILE:.ihx=.omf)
+
+DEBUG_SYMBOL		:= $(CDB_FILE)
 
 %.hex: %.ihx
 	@echo
 	@echo $(MSG_FLASH) "Intel"
 	srec_cat $< -Intel -o $@ -Intel
 
-$(OUTPUT).ihx: $(COBJS) $(AOBJS) | $(BINDIR)
-	@echo
+$(IHX_FILE): $(COBJS) $(AOBJS) | $(BINDIR)
 	@echo $(MSG_LINKING)
 	$(CC) $(LDFLAGS) -o $@ $^
 
 output: hex
 
-hex: $(OUTPUT).hex $(OUTPUT).bin
+hex: $(HEX_FILE)
 
 # Target: clean project.
 clean: clean_list

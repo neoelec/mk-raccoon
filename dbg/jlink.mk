@@ -26,8 +26,6 @@ JLINKGDB_FLAGS		+= -port $(JLINK_PORT)
 GDBSERVER_SH		?= $(JLINK_MK_DIR)/gdbserver.sh
 TRACE32_SH		?= $(JLINK_MK_DIR)/t32_jlink.sh
 
-DEBUG_SYMBOL		:= $(OUTPUT).elf
-
 MSG_JFLASH		:= J-Flash:
 MSG_JLINKGDB		:= J-Link GDB:
 

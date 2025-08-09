@@ -7,8 +7,6 @@ GDB_PATH		:= $(shell dirname $(GDB_MK_FILE))
 GDB			:= gdb
 GDB_FLAGS		+=
 
-DEBUG_SYMBOL		:= $(OUTPUT).elf
-
 MSG_GDB			:= GDB Native:
 
 gdb: $(OUTPUT) $(DEBUG_SYMBOL)

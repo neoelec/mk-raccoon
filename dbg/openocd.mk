@@ -16,8 +16,6 @@ OPENOCDGDB_FLAGS	+= --command "gdb_port $(OPENOCD_PORT)"
 GDBSERVER_SH		?= $(OPENOCD_MK_DIR)/gdbserver.sh
 TRACE32_SH		?= $(OPENOCD_MK_DIR)/t32_jlink.sh
 
-DEBUG_SYMBOL		:= $(OUTPUT).elf
-
 MSG_OPENOCDFLASH	:= OpenOCD Flash:
 MSG_OPENOCDGDB		:= OpenOCD GDB:
 

@@ -8,19 +8,17 @@ include $(LLVM_NATIVE_MK_DIR)/mk/base_llvm.mk
 include $(LLVM_NATIVE_MK_DIR)/dbg/gdb.mk
 include $(LLVM_NATIVE_MK_DIR)/dbg/gdbserver.mk
 
-all: exec
+all: $(OUTPUT)
 
-exec: $(OUTPUT)
-
-$(OUTPUT): $(OUTPUT).elf
+$(OUTPUT): $(ELF_FILE)
 	@$(COPY) $< $@
 
-run: exec
-	$(OUTPUT) $(TESTFLAGS)
+run: $(OUTPUT)
+	$< $(TESTFLAGS)
 
 clean: clean_native
 
 clean_native:
 	$(REMOVE) $(OUTPUT)
 
-.PHONY: exec run clean_native
+.PHONY: run clean_native

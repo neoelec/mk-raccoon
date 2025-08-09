@@ -6,9 +6,15 @@ OUT_ELF_MK_DIR		:= $(shell dirname $(OUT_ELF_MK_FILE))
 
 output: elf lss sym
 
-elf: $(OUTPUT).elf
-lss: $(OUTPUT).lss
-sym: $(OUTPUT).sym
+ELF_FILE		:= $(OUTPUT).elf
+LSS_FILE		:= $(ELF_FILE:.elf=.lss)
+SYM_FILE		:= $(ELF_FILE:.elf=.sym)
+
+DEBUG_SYMBOL		:= $(ELF_FILE)
+
+elf: $(ELF_FILE)
+lss: $(LSS_FILE)
+sym: $(SYM_FILE)
 
 # Create extended listing file from ELF output file.
 %.lss: %.elf
@@ -23,7 +29,7 @@ sym: $(OUTPUT).sym
 	$(NM) -n $< > $@
 
 # Link: create ELF output file from object files.
-$(OUTPUT).elf: $(AOBJS) $(CXXOBJS) $(COBJS) | $(BINDIR)
+$(ELF_FILE): $(AOBJS) $(CXXOBJS) $(COBJS) | $(BINDIR)
 	@echo
 	@echo $(MSG_LINKING) $@
 	$(LD) $^ -o $@ $(ALL_LDFLAGS)

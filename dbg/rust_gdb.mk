@@ -7,8 +7,6 @@ RUST_GDB_PATH		:= $(shell dirname $(RUST_GDB_MK_FILE))
 RUST_GDB		:= rust-gdb
 RUST_GDB_FLAGS		:=
 
-DEBUG_SYMBOL		:= $(OUTPUT).elf
-
 MSG_RUST_GDB		:= RUST GDB Native:
 
 rust_gdb: $(DEBUG_SYMBOL)

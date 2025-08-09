@@ -32,9 +32,12 @@ UPLOAD_FLAGS		+= --verify
 
 BUILD_PATH		:= build/$(BOARD)
 OUTPUT			:= $(BUILD_PATH)/$(SKETCH)
-BIN_FILE		:= $(OUTPUT).bin
-HEX_FILE		:= $(BIN_FILE:.bin=.hex)
-MAP_FILE		:= $(BIN_FILE:.bin=.map)
+ELF_FILE		:= $(OUTPUT).elf
+BIN_FILE		:= $(ELF_FILE:.elf=.bin)
+HEX_FILE		:= $(ELF_FILE:.elf=.hex)
+MAP_FILE		:= $(ELF_FILE:.elf=.map)
+
+DEBUG_SYMBOL		:= $(ELF_FILE)
 
 all: info $(BIN_FILE)
 

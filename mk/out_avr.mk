@@ -4,14 +4,19 @@
 OUT_AVR_MK_FILE		:= $(realpath $(lastword $(MAKEFILE_LIST)))
 OUT_AVR_MK_DIR		:= $(shell dirname $(OUT_AVR_MK_FILE))
 
+include $(OUT_AVR_MK_DIR)/out_elf.mk
+
 # Define additional targets.
 MSG_FLASH		:= Creating load file for Flash:
 MSG_EEPROM		:= Creating load file for EEPROM:
 
+HEX_FILE		:= $(ELF_FILE:.elf=.hex)
+EEP_FILE		:= $(ELF_FILE:.elf=.eep)
+
 output: hex eep
 
-hex: $(OUTPUT).hex
-eep: $(OUTPUT).eep
+hex: $(HEX_FILE)
+eep: $(EEP_FILE)
 
 # Create final output files (.hex, .eep) from ELF output file.
 %.hex: %.elf
@@ -25,5 +30,3 @@ eep: $(OUTPUT).eep
 	$(OBJCOPY) -j .eeprom --set-section-flags .eeprom=alloc,load --change-section-lma .eeprom=0 -O $(FORMAT) $< $@
 
 .PHONY: hex eep
-
-include $(OUT_AVR_MK_DIR)/out_elf.mk

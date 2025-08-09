@@ -12,8 +12,6 @@ GDBSERVER_FLAGS		:= localhost:$(GDBSERVER_PORT) $(OUTPUT)
 GDBSERVER_SH		?= $(GDBSERVER_PATH)/gdbserver.sh
 TRACE32_SH		?= $(GDBSERVER_PATH)/t32_native.sh
 
-DEBUG_SYMBOL		:= $(OUTPUT).elf
-
 MSG_GDBSERVER		:= GDB Server:
 
 gdbserver: $(OUTPUT) $(DEBUG_SYMBOL)
