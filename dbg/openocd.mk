@@ -6,12 +6,12 @@ OPENOCD_MK_DIR		:= $(shell dirname $(OPENOCD_MK_FILE))
 
 OPENOCD			:= openocd
 
-OPENOCDPORT		?= 2331
+OPENOCD_PORT		?= 2331
 
-OPENOCDFLASHFLAGS	+= $(OPENOCDFLAGS)
+OPENOCDFLASH_FLAGS	+= $(OPENOCDFLAGS)
 
-OPENOCDGDBFLAGS		+= $(OPENOCDFLAGS)
-OPENOCDGDBFLAGS		+= --command "gdb_port $(OPENOCDPORT)"
+OPENOCDGDB_FLAGS	+= $(OPENOCDFLAGS)
+OPENOCDGDB_FLAGS	+= --command "gdb_port $(OPENOCD_PORT)"
 
 GDBSERVER_SH		?= $(OPENOCD_MK_DIR)/gdbserver.sh
 TRACE32_SH		?= $(OPENOCD_MK_DIR)/t32_jlink.sh
@@ -27,7 +27,7 @@ ifeq ($(USE_OPENOCDFLASH),y)
 openocdflash: $(DEBUG_SYMBOL)
 	@echo
 	@echo $(MSG_OPENOCDFLASH) $<
-	$(OPENOCD) --file $(OPENOCDCFG) $(OPENOCDFLASHFLAGS) \
+	$(OPENOCD) --file $(OPENOCD_CFG) $(OPENOCDFLASH_FLAGS) \
 			--command "program $< verify reset exit"
 
 .PHONY: openocdflash
@@ -39,7 +39,7 @@ openocdgdb: $(DEBUG_SYMBOL)
 	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
 	@$(GDBSERVER_SH) $< >> .gdbinit
 	@$(TRACE32_SH) $< > target.cmm
-	$(OPENOCD) --file $(OPENOCDCFG) $(OPENOCDGDBFLAGS)
+	$(OPENOCD) --file $(OPENOCD_CFG) $(OPENOCDGDB_FLAGS)
 
 clean: clean_openocdgdb
 

@@ -71,6 +71,6 @@ LDFLAGS			+= -Wl,--start-group -lc -lm -Wl,--end-group
 
 include $(GCC_STM32_MK_DIR)/mk/base_gcc.mk
 
-OPENOCDCFG		:= $(GCC_STM32_MK_DIR)/mk/stm32/openocd/$(CHIP).cfg
+OPENOCD_CFG		:= $(GCC_STM32_MK_DIR)/mk/stm32/openocd/$(CHIP).cfg
 
 include $(GCC_STM32_MK_DIR)/dbg/openocd.mk
