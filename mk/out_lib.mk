@@ -10,22 +10,22 @@ SUBLEVEL		?= 0
 
 AR			:= $(CROSS_COMPILE)ar
 
-SLIBRARY		:= $(BINDIR)/$(TARGET).a
-DLIBRARY		:= $(BINDIR)/$(TARGET).so.$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)
+STATIC_LIBRARY		:= $(BINDIR)/$(TARGET).a
+DYNAMIC_LIBRARY		:= $(BINDIR)/$(TARGET).so.$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)
 
 # Define Messages
 MSG_ARCHIVING 	:= Archiving:
 
 output: library
 
-library: $(SLIBRARY) $(DLIBRARY)
+library: $(STATIC_LIBRARY) $(DYNAMIC_LIBRARY)
 
-$(SLIBRARY): $(COBJS) $(CXXOBJS)
+$(STATIC_LIBRARY): $(COBJS) $(CXXOBJS)
 	@echo
 	@echo $(MSG_ARCHIVING) $@
 	$(AR) rcs $@ $^
 
-$(DLIBRARY): $(COBJS) $(CXXOBJS)
+$(DYNAMIC_LIBRARY): $(COBJS) $(CXXOBJS)
 	@echo
 	@echo $(MSG_LINKING) $@
 	$(LD) -shared -fPIC -Wl,-soname,$(TARGET).so.$(VERSION) -o $@ $^
