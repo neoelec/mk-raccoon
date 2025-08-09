@@ -5,7 +5,7 @@ GDB_MK_FILE		:= $(realpath $(lastword $(MAKEFILE_LIST)))
 GDB_PATH		:= $(shell dirname $(GDB_MK_FILE))
 
 GDB			:= gdb
-GDBFLAGS		:=
+GDB_FLAGS		+=
 
 DEBUG_SYMBOL		:= $(OUTPUT).elf
 
@@ -16,7 +16,7 @@ gdb: $(OUTPUT) $(DEBUG_SYMBOL)
 	@echo $(MSG_GDB) $(OUTPUT)
 	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
 	@$(GDB_PATH)/gdb.sh $< $(TESTFLAGS) >> .gdbinit
-	@$(GDB) $(GDBFLAGS)
+	@$(GDB) $(GDB_FLAGS)
 
 clean: clean_gdb
 
