@@ -21,7 +21,6 @@ UPLOAD_PORT		?= $(shell $(ARDUINO_CLI) board list |\
 SRCS			:= $(wildcard *.ino)
 
 BOARD			:= $(subst :,.,$(FQBN))
-BOARD_MK_FILE		:= $(subst :,/,$(FQBN)).mk
 FQBN_FLAGS		:= --fqbn $(FQBN)
 
 COMPILE_FLAGS		+= $(FQBN_FLAGS) --export-binaries
@@ -39,20 +38,20 @@ MAP_FILE		:= $(ELF_FILE:.elf=.map)
 
 DEBUG_SYMBOL		:= $(ELF_FILE)
 
-all: info $(BIN_FILE)
+all: info $(ELF_FILE)
 
 info:
 	@if [ -z "$(FQBN)" ]; then exit -1; fi
 	@echo "[INFO] $(FQBN) , $(UPLOAD_PORT)"
 
-upload: $(BIN_FILE)
+upload: $(ELF_FILE)
 	@$(ARDUINO_CLI) upload $(UPLOAD_FLAGS)
 
 clean:
 	@rm -rf build
 	@rm -rf $(INTERMEDIATES)
 
-$(BIN_FILE): $(SRCS)
+$(ELF_FILE): $(SRCS)
 	$(ARDUINO_CLI) compile $(COMPILE_FLAGS)
 
 .PHONY: all info upload clean

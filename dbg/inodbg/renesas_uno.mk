@@ -4,8 +4,6 @@
 OPENOCD_CFG		:= $(shell find $(ARDUINO_DIR) -name 'openocd.cfg' |\
 			grep UNOWIFIR4)
 
-include $(ARDUINO_CLI_MK_DIR)/dbg/inodbg.mk
-
 arduino.renesas_uno.minima.debug	:= jlinkgdb
 arduino.renesas_uno.unor4wifi.debug	:= openocdgdb
 
