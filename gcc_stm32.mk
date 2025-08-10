@@ -25,11 +25,14 @@ OUTPUT			:= $(addprefix $(BINDIR)/, $(TARGET)-$(BOARD)-$(CHIP))
 VPATH			+= $(STM32CUBE)/Drivers/$(SERIES)_HAL_Driver/Src
 VPATH			+= $(STM32CUBE)/Drivers/CMSIS/Device/ST/$(SERIES)/Source/Templates
 VPATH			+= $(STM32CUBE)/Drivers/CMSIS/Device/ST/$(SERIES)/Source/Templates/gcc
+VPATH			+= $(STM32CUBE)/Drivers/CMSIS/RTOS$(CMSIS_RTOS_VERSION)/Template
 
 EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/CMSIS/Device/ST/$(SERIES)/Include
 EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/CMSIS/Include
 EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/$(SERIES)_HAL_Driver/Inc
 EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/$(SERIES)_HAL_Driver/Inc/Legacy
+EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/CMSIS/RTOS$(CMSIS_RTOS_VERSION)/Include
+EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/CMSIS/RTOS$(CMSIS_RTOS_VERSION)/Template
 
 CSRCS			+=
 ASRCS			+=
