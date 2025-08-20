@@ -22,17 +22,13 @@ OBJDIR			:= obj
 # Append OBJ and BIN directories to output filename
 OUTPUT			:= $(addprefix $(BINDIR)/, $(TARGET)-$(BOARD)-$(CHIP))
 
-VPATH			+= $(STM32CUBE)/Drivers/$(SERIES)_HAL_Driver/Src
-VPATH			+= $(STM32CUBE)/Drivers/CMSIS/Device/ST/$(SERIES)/Source/Templates
-VPATH			+= $(STM32CUBE)/Drivers/CMSIS/Device/ST/$(SERIES)/Source/Templates/gcc
-VPATH			+= $(STM32CUBE)/Drivers/CMSIS/RTOS$(CMSIS_RTOS_VERSION)/Template
+STM32DRIVERS_DIR	:= $(STM32CUBE_DIR)/Drivers
 
-EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/CMSIS/Device/ST/$(SERIES)/Include
-EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/CMSIS/Include
-EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/$(SERIES)_HAL_Driver/Inc
-EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/$(SERIES)_HAL_Driver/Inc/Legacy
-EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/CMSIS/RTOS$(CMSIS_RTOS_VERSION)/Include
-EXTRAINCDIRS		+= $(STM32CUBE)/Drivers/CMSIS/RTOS$(CMSIS_RTOS_VERSION)/Template
+VPATH			+= $(STM32DRIVERS_DIR)/$(SERIES)_HAL_Driver/Src
+EXTRAINCDIRS		+= $(STM32DRIVERS_DIR)/$(SERIES)_HAL_Driver/Inc
+
+VPATH			+= $(STM32DRIVERS_DIR)/CMSIS/Device/ST/$(SERIES)/Source/Templates
+EXTRAINCDIRS		+= $(STM32DRIVERS_DIR)/CMSIS/Device/ST/$(SERIES)/Include
 
 CSRCS			+=
 ASRCS			+=
