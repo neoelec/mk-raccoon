@@ -204,6 +204,7 @@ $(foreach EXT, $(EXT_CXX), $(eval $(call RULES_CXX,$(EXT))))
 
 -include $(AS_MK)
 -include $(OUT_MK)
+-include $(shell mkdir -p $(OBJDIR) 2>/dev/null) $(wildcard $(OBJDIR)/*.d)
 
 # Target: clean project.
 clean: clean_list

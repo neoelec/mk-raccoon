@@ -147,7 +147,7 @@ COBJS			+= $$(COBJS_$(1))
 $$(COBJS_$(1)): $(OBJDIR)/%.o : %.$(1) | $(OBJDIR)
 	@echo
 	@echo $(MSG_COMPILING) $$<
-	$(CC) -c $(ALL_CFLAGS) $$< -o $$@
+	$(CC) -c -MMD -MP -MF$$(@:.o=.d) -MT$$@ $(ALL_CFLAGS) $$< -o $$@
 endef
 
 $(foreach EXT, $(EXT_CC), $(eval $(call RULES_CC,$(EXT))))
@@ -160,13 +160,14 @@ CXXOBJS			+= $$(CXXOBJS_$(1))
 $$(CXXOBJS_$(1)): $(OBJDIR)/%.o : %.$(1) | $(OBJDIR)
 	@echo
 	@echo $(MSG_COMPILING) $$<
-	$(CXX) -c $(ALL_CXXFLAGS) $$< -o $$@
+	$(CXX) -c -MMD -MP -MF$$(@:.o=.d) -MT$$@ $(ALL_CXXFLAGS) $$< -o $$@
 endef
 
 $(foreach EXT, $(EXT_CXX), $(eval $(call RULES_CXX,$(EXT))))
 
 -include $(AS_MK)
 -include $(OUT_MK)
+-include $(shell mkdir -p $(OBJDIR) 2>/dev/null) $(wildcard $(OBJDIR)/*.d)
 
 # Target: clean project.
 clean: clean_list
