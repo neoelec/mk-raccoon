@@ -18,7 +18,7 @@ all: svg
 
 svg: $(SVGS)
 
-$(SVGS): %.svg : %.puml : $(PLANTUML_JAR)
+$(SVGS): %.svg : %.puml
 	@echo
 	@echo $(MSG_DRAWING_SVG) $@
 	@if [ ! -f $(PLANTUML_JAR) ]; then \
