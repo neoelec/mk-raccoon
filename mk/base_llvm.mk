@@ -28,7 +28,7 @@ CSTANDARD		?= -std=c17
 CXXSTANDARD		?= -std=c++17
 
 # Makefile for assembler
-AS_MK			?= $(BASE_LLVM_MK_DIR)/as_gas.mk
+AS_MK			?= $(BASE_LLVM_MK_DIR)/as_cc.mk
 
 # Makefile for output
 OUT_MK			?= $(BASE_LLVM_MK_DIR)/out_elf.mk
@@ -88,7 +88,7 @@ OBJCOPY			:= llvm-objcopy
 OBJDUMP			:= llvm-objdump
 SIZE			:= llvm-size
 STRIP			:= llvm-strip
-NM			:= nm
+NM			:= llvm-nm
 REMOVE			:= rm -rf
 COPY			:= cp
 

@@ -34,7 +34,7 @@ CSTANDARD		?= -std=gnu17
 CXXSTANDARD		?= -std=gnu++17
 
 # Makefile for assembler
-AS_MK			?= $(BASE_GCC_MK_DIR)/as_gas.mk
+AS_MK			?= $(BASE_GCC_MK_DIR)/as_cc.mk
 
 # Makefile for output
 OUT_MK			?= $(BASE_GCC_MK_DIR)/out_elf.mk
