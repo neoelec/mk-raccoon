@@ -4,7 +4,7 @@
 GDB_MK_FILE		:= $(realpath $(lastword $(MAKEFILE_LIST)))
 GDB_PATH		:= $(shell dirname $(GDB_MK_FILE))
 
-GDB			:= gdb
+GDB			?= gdb
 GDB_FLAGS		+=
 
 MSG_GDB			:= GDB Native:
