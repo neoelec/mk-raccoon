@@ -4,6 +4,7 @@
 RUST_NATIVE_MK_FILE	:= $(realpath $(lastword $(MAKEFILE_LIST)))
 RUST_NATIVE_MK_DIR	:= $(shell dirname $(RUST_NATIVE_MK_FILE))
 
+GDB			?= rust-gdb
+
 include $(RUST_NATIVE_MK_DIR)/mk/base_rust.mk
-include $(RUST_NATIVE_MK_DIR)/dbg/rust_gdb.mk
-include $(RUST_NATIVE_MK_DIR)/dbg/gdbserver.mk
+include $(RUST_NATIVE_MK_DIR)/dbg/gdb.mk

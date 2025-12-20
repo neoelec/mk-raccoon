@@ -23,8 +23,7 @@ JLINKGDB_FLAGS		+= -noLocalhostOnly
 JLINKGDB_FLAGS		+= -nologtofile
 JLINKGDB_FLAGS		+= -port $(JLINK_PORT)
 
-GDBSERVER_SH		?= $(JLINK_MK_DIR)/gdbserver.sh
-TRACE32_SH		?= $(JLINK_MK_DIR)/t32_jlink.sh
+TRACE32_MODE		?= embedded
 
 MSG_JFLASH		:= J-Flash:
 MSG_JLINKGDB		:= J-Link GDB:
@@ -43,9 +42,7 @@ endif
 jlinkgdb: $(DEBUG_SYMBOL)
 	@echo
 	@echo $(MSG_JLINKGDB) $<
-	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
-	@$(GDBSERVER_SH) $< >> .gdbinit
-	@$(TRACE32_SH) $< > target.cmm
+	@$(JLINK_MK_DIR)/trace32.sh $(TRACE32_MODE) $< > target.cmm
 	$(JLINKGDB) $(JLINKGDB_FLAGS)
 
 clean: clean_jlinkgdb

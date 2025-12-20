@@ -13,8 +13,7 @@ OPENOCDFLASH_FLAGS	+= $(OPENOCDFLAGS)
 OPENOCDGDB_FLAGS	+= $(OPENOCDFLAGS)
 OPENOCDGDB_FLAGS	+= --command "gdb_port $(OPENOCD_PORT)"
 
-GDBSERVER_SH		?= $(OPENOCD_MK_DIR)/gdbserver.sh
-TRACE32_SH		?= $(OPENOCD_MK_DIR)/t32_jlink.sh
+TRACE32_MODE		?= embedded
 
 MSG_OPENOCDFLASH	:= OpenOCD Flash:
 MSG_OPENOCDGDB		:= OpenOCD GDB:
@@ -34,9 +33,7 @@ endif
 openocdgdb: $(DEBUG_SYMBOL)
 	@echo
 	@echo $(MSG_OPENOCDGDB) $<
-	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
-	@$(GDBSERVER_SH) $< >> .gdbinit
-	@$(TRACE32_SH) $< > target.cmm
+	@$(OPENOCD_MK_DIR)/trace32.sh $(TRACE32_MODE) $< > target.cmm
 	$(OPENOCD) --file $(OPENOCD_CFG) $(OPENOCDGDB_FLAGS)
 
 clean: clean_openocdgdb

@@ -6,7 +6,6 @@ LLVM_NATIVE_MK_DIR	:= $(shell dirname $(LLVM_NATIVE_MK_FILE))
 
 include $(LLVM_NATIVE_MK_DIR)/mk/base_llvm.mk
 include $(LLVM_NATIVE_MK_DIR)/dbg/gdb.mk
-include $(LLVM_NATIVE_MK_DIR)/dbg/gdbserver.mk
 
 all: $(OUTPUT)
 

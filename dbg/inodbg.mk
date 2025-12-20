@@ -4,7 +4,7 @@
 INODBG_MK_FILE		:= $(realpath $(lastword $(MAKEFILE_LIST)))
 INODBG_MK_DIR		:= $(shell dirname $(INODBG_MK_FILE))
 
-TRACE32_SH		:= $(INODBG_MK_DIR)/t32_inodbg.sh
+TRACE32_MODE		:= arduino
 
 # forcley disable jflash
 USE_JFLASH		:= n
