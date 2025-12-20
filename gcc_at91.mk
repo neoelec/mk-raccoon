@@ -71,7 +71,7 @@ LDFLAGS			+= -Wl,--gc-sections
 LDFLAGS			+= -static
 LDFLAGS			+= -Wl,--start-group -lc -lm -Wl,--end-group
 
-include $(GCC_AT91_MK_DIR)/mk/base_gcc.mk
+include $(GCC_AT91_MK_DIR)/mk/base_cc.mk
 
 JLINK_CHIP		:= $(shell echo $(CHIP) | tr a-z A-Z)
 JFLASH_PRJ		:= $(GCC_AT91_MK_DIR)/mk/at91/jflash/$(CHIP).jflash

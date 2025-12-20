@@ -68,7 +68,7 @@ LDFLAGS			+= -Wl,--gc-sections
 LDFLAGS			+= -static
 LDFLAGS			+= -Wl,--start-group -lc -lm -Wl,--end-group
 
-include $(GCC_STM32_MK_DIR)/mk/base_gcc.mk
+include $(GCC_STM32_MK_DIR)/mk/base_cc.mk
 
 OPENOCD_CFG		:= $(GCC_STM32_MK_DIR)/mk/stm32/openocd/$(CHIP).cfg
 

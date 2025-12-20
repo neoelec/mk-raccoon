@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0+
 # Copyright (c) 2025 YOUNGJIN JOO (neoelec@gmail.com)
 
-BASE_LLVM_MK_FILE	:= $(realpath $(lastword $(MAKEFILE_LIST)))
-BASE_LLVM_MK_DIR	:= $(shell dirname $(BASE_LLVM_MK_FILE))
+BASE_CC_MK_FILE		:= $(realpath $(lastword $(MAKEFILE_LIST)))
+BASE_CC_MK_DIR		:= $(shell dirname $(BASE_CC_MK_FILE))
 
 # Cross compile
 CROSS_COMPILE		?=
@@ -17,7 +17,9 @@ OBJDIR			?= obj
 # Define output file
 OUTPUT			?= $(addprefix $(BINDIR)/, $(TARGET))
 
-# Optimization level.
+# Optimization level, can be [0, 1, 2, 3, s].
+#     0 = turn off optimization. s = optimize for size.
+#     (Note: 3 is not always the best optimization level.)
 OPT			?= s
 
 # Debugging format.
@@ -28,10 +30,10 @@ CSTANDARD		?= -std=c17
 CXXSTANDARD		?= -std=c++17
 
 # Makefile for assembler
-AS_MK			?= $(BASE_LLVM_MK_DIR)/as_cc.mk
+AS_MK			?= $(BASE_CC_MK_DIR)/as_cc.mk
 
 # Makefile for output
-OUT_MK			?= $(BASE_LLVM_MK_DIR)/out_elf.mk
+OUT_MK			?= $(BASE_CC_MK_DIR)/out_elf.mk
 
 # Source extension names
 EXT_CC			+= c
@@ -76,19 +78,18 @@ ASFLAGS			+=
 
 #---------------- Linker Options ----------------
 LDFLAGS			+= -Wl,-Map=$(OUTPUT).map,--cref
-LDFLAGS			+= -fuse-ld=lld -flto
 
 #============================================================================
 
 # Define programs and commands.
-CC			:= clang
-CXX			:= clang++
-LD			:= clang++
-OBJCOPY			:= llvm-objcopy
-OBJDUMP			:= llvm-objdump
-SIZE			:= llvm-size
-STRIP			:= llvm-strip
-NM			:= llvm-nm
+CC			?= $(CROSS_COMPILE)gcc
+CXX			?= $(CROSS_COMPILE)g++
+OBJCOPY			?= $(CROSS_COMPILE)objcopy
+OBJDUMP			?= $(CROSS_COMPILE)objdump
+SIZE			?= $(CROSS_COMPILE)size
+STRIP			?= $(CROSS_COMPILE)strip
+NM			?= $(CROSS_COMPILE)nm
+LD			:= $(CXX)
 REMOVE			:= rm -rf
 COPY			:= cp
 
@@ -113,13 +114,13 @@ ALL_LDFLAGS		:= $(CFLAGS) $(LDFLAGS)
 # Default target.
 all: build
 
-build: llvmversion sizebefore $(BINDIR) $(OBJDIR) output sizeafter
+build: ccversion sizebefore $(BINDIR) $(OBJDIR) output sizeafter
 
 $(BINDIR) $(OBJDIR):
 	@mkdir -p $@
 
 # Display size of file.
-sizebefore: | llvmversion
+sizebefore: | ccversion
 	@if [ -f $(OUTPUT).elf ]; then \
 		echo; \
 		echo $(MSG_SIZE_BEFORE); \
@@ -136,7 +137,7 @@ sizeafter: | output
 	fi
 
 # Display compiler version information.
-llvmversion:
+ccversion:
 	@$(CC) --version
 
 # Compile: create object files from C source files.
@@ -179,6 +180,6 @@ clean_list:
 	$(REMOVE) $(BINDIR)
 
 # Listing of phony targets.
-.PHONY: all sizebefore sizeafter llvmversion \
+.PHONY: all sizebefore sizeafter ccversion \
 		build elf lss sym \
 		clean clean_list

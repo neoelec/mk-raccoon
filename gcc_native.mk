@@ -4,7 +4,7 @@
 GCC_NATIVE_MK_FILE	:= $(realpath $(lastword $(MAKEFILE_LIST)))
 GCC_NATIVE_MK_DIR	:= $(shell dirname $(GCC_NATIVE_MK_FILE))
 
-include $(GCC_NATIVE_MK_DIR)/mk/base_gcc.mk
+include $(GCC_NATIVE_MK_DIR)/mk/base_cc.mk
 include $(GCC_NATIVE_MK_DIR)/dbg/gdb.mk
 
 all: $(OUTPUT)

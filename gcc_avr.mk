@@ -71,5 +71,5 @@ LDFLAGS			+= -Wl,--start-group -lc -lm -Wl,--end-group
 
 OUT_MK			:= $(GCC_AVR_MK_DIR)/mk/out_avr.mk
 
-include $(GCC_AVR_MK_DIR)/mk/base_gcc.mk
+include $(GCC_AVR_MK_DIR)/mk/base_cc.mk
 include $(GCC_AVR_MK_DIR)/dbg/avrdude.mk
