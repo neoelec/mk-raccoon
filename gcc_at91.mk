@@ -4,6 +4,16 @@
 GCC_AT91_MK_FILE	:= $(realpath $(lastword $(MAKEFILE_LIST)))
 GCC_AT91_MK_DIR		:= $(shell dirname $(GCC_AT91_MK_FILE))
 
+CROSS_COMPILE		?= arm-none-eabi-
+
+CC			:= $(CROSS_COMPILE)gcc
+CXX			:= $(CROSS_COMPILE)g++
+OBJCOPY			:= $(CROSS_COMPILE)objcopy
+OBJDUMP			:= $(CROSS_COMPILE)objdump
+SIZE			:= $(CROSS_COMPILE)size
+STRIP			:= $(CROSS_COMPILE)strip
+NM			:= $(CROSS_COMPILE)nm
+
 # Chip & board used for compilation
 # (can be overriden by adding CHIP=chip and BOARD=board to the command-line)
 BOARD			?= at91sam7s-ek
@@ -20,8 +30,6 @@ include $(GCC_AT91_MK_DIR)/mk/at91/platform/$(PLATFORM).mk
 # TRACE_LEVEL_FATAL      1
 # TRACE_LEVEL_NO_TRACE   0
 TRACE_LEVEL		?= 0
-
-CROSS_COMPILE		:= arm-none-eabi-
 
 # Output directories
 BINDIR			:= bin

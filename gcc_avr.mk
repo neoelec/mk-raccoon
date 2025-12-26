@@ -4,6 +4,16 @@
 GCC_AVR_MK_FILE		:= $(realpath $(lastword $(MAKEFILE_LIST)))
 GCC_AVR_MK_DIR		:= $(shell dirname $(GCC_AVR_MK_FILE))
 
+CROSS_COMPILE		?= avr-
+
+CC			:= $(CROSS_COMPILE)gcc
+CXX			:= $(CROSS_COMPILE)g++
+OBJCOPY			:= $(CROSS_COMPILE)objcopy
+OBJDUMP			:= $(CROSS_COMPILE)objdump
+SIZE			:= $(CROSS_COMPILE)size
+STRIP			:= $(CROSS_COMPILE)strip
+NM			:= $(CROSS_COMPILE)nm
+
 # MCU name
 MCU			?= atmega128
 
@@ -16,9 +26,6 @@ F_CPU			?= 16000000
 
 # Output format. (can be srec, ihex, binary)
 FORMAT			?= ihex
-
-# Define programs and commands.
-CROSS_COMPILE		:= avr-
 
 # Compiler flag to set the C Standard level.
 #     c89   = "ANSI" C

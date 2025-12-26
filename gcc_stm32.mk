@@ -4,6 +4,16 @@
 GCC_STM32_MK_FILE	:= $(realpath $(lastword $(MAKEFILE_LIST)))
 GCC_STM32_MK_DIR	:= $(shell dirname $(GCC_STM32_MK_FILE))
 
+CROSS_COMPILE		?= arm-none-eabi-
+
+CC			:= $(CROSS_COMPILE)gcc
+CXX			:= $(CROSS_COMPILE)g++
+OBJCOPY			:= $(CROSS_COMPILE)objcopy
+OBJDUMP			:= $(CROSS_COMPILE)objdump
+SIZE			:= $(CROSS_COMPILE)size
+STRIP			:= $(CROSS_COMPILE)strip
+NM			:= $(CROSS_COMPILE)nm
+
 # Chip & board used for compilation
 # (can be overriden by adding CHIP=chip and BOARD=board to the command-line)
 BOARD			?= nucleo-f439zi
@@ -12,8 +22,6 @@ PLATFORM		?= nucleo-f439zi
 include $(GCC_STM32_MK_DIR)/mk/stm32/platform/$(PLATFORM).mk
 include $(GCC_STM32_MK_DIR)/mk/stm32/series/$(SERIES).mk
 include $(GCC_STM32_MK_DIR)/mk/stm32/chip/$(CHIP).mk
-
-CROSS_COMPILE		:= arm-none-eabi-
 
 # Output directories
 BINDIR			:= bin
