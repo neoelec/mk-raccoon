@@ -9,7 +9,7 @@ GDB_FLAGS		+=
 
 GDBSERVER		:= gdbserver
 GDBSERVER_PORT		?= 2331
-GDBSERVER_FLAGS		?= localhost:$(GDBSERVER_PORT) $(OUTPUT)
+GDBSERVER_FLAGS		?= localhost:$(GDBSERVER_PORT) $(DEBUG_SYMBOL)
 
 TRACE32_MODE		?= native
 
@@ -19,21 +19,21 @@ MSG_GDBSERVER		:= GDB Server:
 
 gdb_localhost: $(OUTPUT) $(DEBUG_SYMBOL)
 	@echo
-	@echo $(MSG_GDB_LOCALHOST) $(OUTPUT)
+	@echo $(MSG_GDB_LOCALHOST) $(DEBUG_SYMBOL)
 	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
-	@$(GDB_PATH)/gdb.sh localhost $< $(TESTFLAGS) >> .gdbinit
+	@$(GDB_PATH)/gdb.sh localhost $(DEBUG_SYMBOL) $(TESTFLAGS) >> .gdbinit
 	@$(GDB) $(GDB_FLAGS)
 
 gdb_remote:
 	@echo
-	@echo $(MSG_GDB_REMOTE) $(OUTPUT)
+	@echo $(MSG_GDB_REMOTE) $(DEBUG_SYMBOL)
 	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
 	@$(GDB_PATH)/gdb.sh remote $(DEBUG_SYMBOL) >> .gdbinit
 	@$(GDB)
 
 gdbserver: $(OUTPUT) $(DEBUG_SYMBOL)
 	@echo
-	@echo $(MSG_GDBSERVER) $(OUTPUT)
+	@echo $(MSG_GDBSERVER) $(DEBUG_SYMBOL)
 	@$(GDB_PATH)/trace32.sh $(TRACE32_MODE) $< > target.cmm
 	@$(GDBSERVER) $(GDBSERVER_FLAGS) $(TESTFLAGS)
 
@@ -41,5 +41,6 @@ clean: clean_gdb
 
 clean_gdb:
 	$(REMOVE) .gdbinit
+	$(REMOVE) target.cmm
 
 .PHONY: gdb clean_gdb
