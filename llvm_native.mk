@@ -21,6 +21,7 @@ all: $(OUTPUT)
 
 $(OUTPUT): $(ELF_FILE)
 	@$(COPY) $< $@
+	@$(STRIP) $@
 
 run: $(OUTPUT)
 	$< $(TESTFLAGS)
