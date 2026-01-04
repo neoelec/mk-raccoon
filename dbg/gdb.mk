@@ -34,7 +34,7 @@ gdb_remote:
 gdbserver: $(OUTPUT) $(DEBUG_SYMBOL)
 	@echo
 	@echo $(MSG_GDBSERVER) $(DEBUG_SYMBOL)
-	@$(GDB_PATH)/trace32.sh $(TRACE32_MODE) $< > target.cmm
+	@$(GDB_PATH)/trace32.sh $(TRACE32_MODE) $(DEBUG_SYMBOL) > target.cmm
 	@$(GDBSERVER) $(GDBSERVER_FLAGS) $(TESTFLAGS)
 
 clean: clean_gdb
