@@ -21,14 +21,14 @@ gdb_localhost: $(OUTPUT) $(DEBUG_SYMBOL)
 	@echo
 	@echo $(MSG_GDB_LOCALHOST) $(DEBUG_SYMBOL)
 	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
-	@$(GDB_PATH)/gdb.sh localhost $(DEBUG_SYMBOL) $(TESTFLAGS) >> .gdbinit
+	@$(GDB_PATH)/gdb.sh localhost $(DEBUG_SYMBOL) "$(TESTFLAGS)" >> .gdbinit
 	@$(GDB) $(GDB_FLAGS)
 
 gdb_remote:
 	@echo
 	@echo $(MSG_GDB_REMOTE) $(DEBUG_SYMBOL)
 	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
-	@$(GDB_PATH)/gdb.sh remote $(DEBUG_SYMBOL) >> .gdbinit
+	@$(GDB_PATH)/gdb.sh remote $(DEBUG_SYMBOL) $(GDBSERVER_PORT) >> .gdbinit
 	@$(GDB)
 
 gdbserver: $(OUTPUT) $(DEBUG_SYMBOL)
