@@ -6,6 +6,7 @@ GDB_PATH		:= $(shell dirname $(GDB_MK_FILE))
 
 GDB			?= gdb
 GDB_FLAGS		+=
+GDB_REMOTE_PORT		?= 2331
 
 GDBSERVER		:= gdbserver
 GDBSERVER_PORT		?= 2331
@@ -28,7 +29,7 @@ gdb_remote:
 	@echo
 	@echo $(MSG_GDB_REMOTE) $(DEBUG_SYMBOL)
 	@if [ -f gdbinit ]; then cat gdbinit > .gdbinit; else echo "" > .gdbinit; fi
-	@$(GDB_PATH)/gdb.sh remote $(DEBUG_SYMBOL) $(GDBSERVER_PORT) >> .gdbinit
+	@$(GDB_PATH)/gdb.sh remote $(DEBUG_SYMBOL) $(GDB_REMOTE_PORT) >> .gdbinit
 	@$(GDB)
 
 gdbserver: $(OUTPUT) $(DEBUG_SYMBOL)
