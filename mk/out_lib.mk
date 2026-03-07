@@ -20,12 +20,12 @@ output: library
 
 library: $(STATIC_LIBRARY) $(DYNAMIC_LIBRARY)
 
-$(STATIC_LIBRARY): $(COBJS) $(CXXOBJS)
+$(STATIC_LIBRARY): $(AOBJS) $(CXXOBJS) $(COBJS) | $(BINDIR)
 	@echo
 	@echo $(MSG_ARCHIVING) $@
 	$(AR) rcs $@ $^
 
-$(DYNAMIC_LIBRARY): $(COBJS) $(CXXOBJS)
+$(DYNAMIC_LIBRARY): $(AOBJS) $(CXXOBJS) $(COBJS) | $(BINDIR)
 	@echo
 	@echo $(MSG_LINKING) $@
 	$(LD) -shared -fPIC -Wl,-soname,$(TARGET).so.$(VERSION) -o $@ $^
