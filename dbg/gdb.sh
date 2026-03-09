@@ -10,7 +10,7 @@ GDBSERVER_PORT=${3}
 function __gdb_localhost() {
     cat <<EOF
 file ${DEBUG_SYMBOL}
-break main
+break _start
 run ${TESTFLAGS}
 EOF
 
@@ -21,7 +21,7 @@ function __gdb_remote() {
     cat <<EOF
 target remote :${GDBSERVER_PORT}
 file ${DEBUG_SYMBOL}
-break main
+break _start
 continue
 EOF
 
