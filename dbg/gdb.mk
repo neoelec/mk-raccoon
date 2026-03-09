@@ -17,6 +17,7 @@ TRACE32_MODE		?= native
 MSG_GDB_LOCALHOST	:= GDB Local Host:
 MSG_GDB_REMOTE		:= GDB Remote:
 MSG_GDBSERVER		:= GDB Server:
+MSG_TRACE32_CMM		:= Trac32 CMM:
 
 gdb_localhost: $(OUTPUT) $(DEBUG_SYMBOL)
 	@echo
@@ -38,10 +39,15 @@ gdbserver: $(OUTPUT) $(DEBUG_SYMBOL)
 	@$(GDB_PATH)/trace32.sh $(TRACE32_MODE) $(DEBUG_SYMBOL) > target.cmm
 	@$(GDBSERVER) $(GDBSERVER_FLAGS) $(TESTFLAGS)
 
+trace32_cmm: $(OUTPUT) $(DEBUG_SYMBOL)
+	@echo
+	@echo $(MSG_TRACE32_CMM) $(DEBUG_SYMBOL)
+	@$(GDB_PATH)/trace32.sh $(TRACE32_MODE) $(DEBUG_SYMBOL) > target.cmm
+
 clean: clean_gdb
 
 clean_gdb:
 	$(REMOVE) .gdbinit
 	$(REMOVE) target.cmm
 
-.PHONY: gdb clean_gdb
+.PHONY: gdb_localhost gdb_remote gdbserver trace32_cmm clean_gdb
