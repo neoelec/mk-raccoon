@@ -52,11 +52,11 @@ ASRCS			+=
 #  -Wall...:     warning level
 #  -Wa,...:      tell GCC to pass this to the assembler.
 #    -adhlns...: create assembler listing
-CFLAGS			+= -D$(CHIP)
-CFLAGS			+= -DTRACE_LEVEL=$(TRACE_LEVEL)
-CFLAGS			+= -mlong-calls
-CFLAGS			+= -ffunction-sections
-CFLAGS			+= --param=min-pagesize=0
+CPPFLAGS		+= -D$(CHIP)
+CPPFLAGS		+= -DTRACE_LEVEL=$(TRACE_LEVEL)
+CPPFLAGS		+= -mlong-calls
+CPPFLAGS		+= -ffunction-sections
+CPPFLAGS		+= --param=min-pagesize=0
 
 #---------------- Assembler Options ----------------
 #  -Wa,...:   tell GCC to pass this to the assembler.

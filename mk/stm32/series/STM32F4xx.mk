@@ -5,7 +5,7 @@ CSRCS			+= syscalls.c
 CSRCS			+= sysmem.c
 CSRCS			+= system_stm32f4xx.c
 
-CFLAGS			+= -mcpu=cortex-m4
-CFLAGS			+= -mfpu=fpv4-sp-d16
-CFLAGS			+= -mfloat-abi=hard
-CFLAGS			+= -mthumb
+CPPFLAGS		+= -mcpu=cortex-m4
+CPPFLAGS		+= -mfpu=fpv4-sp-d16
+CPPFLAGS		+= -mfloat-abi=hard
+CPPFLAGS		+= -mthumb

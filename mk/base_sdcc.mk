@@ -109,14 +109,15 @@ CINCS			+=
 CDEFS			+= -DF_CPU=$(F_CPU)UL
 
 # Compiler Options
-CFLAGS			+= $(CDEFS)
-CFLAGS			+= -m$(MCU)
-CFLAGS			+= --opt-$(OPT)
+CPPFLAGS		+= $(CDEFS)
+CPPFLAGS		+= -m$(MCU)
+CPPFLAGS		+= --opt-$(OPT)
+CPPFLAGS		+= --debug
+CPPFLAGS		+= $(CINCS)
+CPPFLAGS		+= $(patsubst %,-I%,$(EXTRAINCDIRS))
+CPPFLAGS		+= --verbose
+
 CFLAGS			+= --std-$(CSTANDARD)
-CFLAGS			+= --debug
-CFLAGS			+= $(CINCS)
-CFLAGS			+= $(patsubst %,-I%,$(EXTRAINCDIRS))
-CFLAGS			+= --verbose
 
 # Assembler Options
 ASFLAGS			+= -x -l -s
@@ -148,7 +149,7 @@ MSG_CLEANING		:= Cleaning project:
 
 # Combine all necessary flags and optional flags.
 # Add target processor to flags.
-ALL_CFLAGS		:= $(CFLAGS)
+ALL_CFLAGS		:= $(CPPFLAGS) $(CFLAGS)
 ALL_ASFLAGS		:= $(ASFLAGS)
 
 # Default target.

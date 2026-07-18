@@ -61,14 +61,15 @@ CDEFS			+=
 # Place -I options here
 CINCS			+=
 
-#---------------- Compiler Options ----------------
-CFLAGS			+= -Wall
-CFLAGS			+= -g$(DEBUG)
-CFLAGS			+= $(CDEFS) $(CINCS)
-CFLAGS			+= -O$(OPT)
-CFLAGS			+= $(patsubst %,-I%,$(EXTRAINCDIRS))
+#---------------- C Preprocessor Options ----------------
+CPPFLAGS		+= -Wall
+CPPFLAGS		+= -g$(DEBUG)
+CPPFLAGS		+= $(CDEFS) $(CINCS)
+CPPFLAGS		+= -O$(OPT)
+CPPFLAGS		+= $(patsubst %,-I%,$(EXTRAINCDIRS))
 
-CONLYFLAGS		+= $(CSTANDARD)
+#---------------- Compiler Options ----------------
+CFLAGS			+= $(CSTANDARD)
 
 #---------------- C++ Compiler Options ----------------
 CXXFLAGS		+= $(CXXSTANDARD)
@@ -106,10 +107,10 @@ MSG_CLEANING		:= Cleaning project:
 
 # Combine all necessary flags and optional flags.
 # Add target processor to flags.
-ALL_CFLAGS		:= $(CFLAGS) $(CONLYFLAGS)
-ALL_CXXFLAGS		:= $(CFLAGS) $(CXXFLAGS)
-ALL_ASFLAGS		:= $(CFLAGS) $(ASFLAGS)
-ALL_LDFLAGS		:= $(CFLAGS) $(LDFLAGS)
+ALL_CFLAGS		:= $(CPPFLAGS) $(CFLAGS)
+ALL_CXXFLAGS		:= $(CPPFLAGS) $(CXXFLAGS)
+ALL_ASFLAGS		:= $(CPPFLAGS) $(ASFLAGS)
+ALL_LDFLAGS		:= $(CPPFLAGS) $(LDFLAGS)
 
 # Default target.
 all: build

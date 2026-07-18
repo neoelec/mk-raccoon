@@ -14,9 +14,9 @@ CSRCS			+= board_memories.c
 
 ASRCS			+= board_cstartup.S
 
-CFLAGS			+= -Dflash
-CFLAGS			+= -mcpu=arm7tdmi
-CFLAGS			+= -mfloat-abi=soft
+CPPFLAGS		+= -Dflash
+CPPFLAGS		+= -mcpu=arm7tdmi
+CPPFLAGS		+= -mfloat-abi=soft
 
 # Linker Script
 LD_SCRIPT		?= $(AT91LIB)/boards/$(PLATFORM)/$(CHIP)/flash.lds

@@ -48,13 +48,13 @@ ASRCS			+=
 #  -Wall...:     warning level
 #  -Wa,...:      tell GCC to pass this to the assembler.
 #    -adhlns...: create assembler listing
-CFLAGS			+= -DUSE_HAL_DRIVER
-CFLAGS			+= -D$(SERIES)
-CFLAGS			+= -D$(FAMILY)
-CFLAGS			+= -ffunction-sections
-CFLAGS			+= -fdata-sections
-CFLAGS			+= -fstack-usage
-CFLAGS			+= --specs=nano.specs
+CPPFLAGS		+= -DUSE_HAL_DRIVER
+CPPFLAGS		+= -D$(SERIES)
+CPPFLAGS		+= -D$(FAMILY)
+CPPFLAGS		+= -ffunction-sections
+CPPFLAGS		+= -fdata-sections
+CPPFLAGS		+= -fstack-usage
+CPPFLAGS		+= --specs=nano.specs
 
 #---------------- Assembler Options ----------------
 #  -Wa,...:   tell GCC to pass this to the assembler.

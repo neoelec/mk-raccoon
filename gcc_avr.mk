@@ -45,10 +45,10 @@ CDEFS			+= -mmcu=$(MCU) -DF_CPU=$(F_CPU)UL
 #  -Wall...:     warning level
 #  -Wa,...:      tell GCC to pass this to the assembler.
 #    -adhlns...: create assembler listing
-CFLAGS			+= -funsigned-char
-CFLAGS			+= -funsigned-bitfields
-CFLAGS			+= -fpack-struct
-CFLAGS			+= -fshort-enums
+CPPFLAGS		+= -funsigned-char
+CPPFLAGS		+= -funsigned-bitfields
+CPPFLAGS		+= -fpack-struct
+CPPFLAGS		+= -fshort-enums
 
 #---------------- Assembler Options ----------------
 #  -Wa,...:   tell GCC to pass this to the assembler.
